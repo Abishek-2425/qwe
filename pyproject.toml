@@ -1,17 +1,26 @@
+[build-system]
+requires = ["setuptools>=65.5.1", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "gensh"
 version = "0.1.0"
-description = "NL → shell command CLI using Grok"
+description = "Natural-language to shell command converter Grok API"
+readme = "README.md"
+authors = [{name = "Abishek S"}]
 requires-python = ">=3.10"
-
 dependencies = [
-  "typer",
-  "rich",
-  "google-generativeai"
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "google-generativeai>=0.1.0"
+]
+keywords = ["CLI", "shell", "generator", "automation"]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
 ]
 
 [project.scripts]
-gensh = "cli.main:app"
-
-[tool.setuptools]
-packages = ["cli", "core"]
+gensh = "cli.main:main"

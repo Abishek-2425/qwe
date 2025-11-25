@@ -1,0 +1,11 @@
+MANIFEST.in
+README.md
+pyproject.toml
+setup.py
+config/example.setting.json
+gensh.egg-info/PKG-INFO
+gensh.egg-info/SOURCES.txt
+gensh.egg-info/dependency_links.txt
+gensh.egg-info/entry_points.txt
+gensh.egg-info/requires.txt
+gensh.egg-info/top_level.txt
