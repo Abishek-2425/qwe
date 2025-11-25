@@ -171,7 +171,7 @@ def create_app():
     # history subgroup
     # ===================================================================== 
 
-    HISTORY_FILE = os.path.expanduser("~/.genshpilot_history.json") 
+    HISTORY_FILE = os.path.expanduser("~/.gensh-cli_history.json") 
 
     @history_app.command("show")
     def history_show():

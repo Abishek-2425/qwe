@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime
 
-HISTORY_FILE = os.path.expanduser("~/.flowpilot_history.json")
+HISTORY_FILE = os.path.expanduser("~/.gensh-cli_history.json")
 
 def save_history(prompt, cmd, risk):
     entry = {
