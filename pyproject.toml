@@ -6,8 +6,8 @@ build-backend = "setuptools.build_meta"
 name = "gensh"
 version = "0.1.0"
 description = "Natural-language to shell command converter Grok API"
-readme = "README.md"
-authors = [{name = "Abishek S"}]
+readme = { file = "README.md", content-type = "text/markdown" }
+authors = [{ name = "Abishek S", email = "your-email@example.com" }]
 requires-python = ">=3.10"
 dependencies = [
     "typer>=0.9.0",
@@ -18,8 +18,12 @@ keywords = ["CLI", "shell", "generator", "automation"]
 license = {text = "MIT"}
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent"
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Utilities"
 ]
 
 [tool.setuptools.packages.find]

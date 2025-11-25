@@ -2,17 +2,23 @@ Metadata-Version: 2.4
 Name: gensh
 Version: 0.1.0
 Summary: Natural-language to shell command converter Grok API
-Author: Abishek S
+Author: ABISHEK S
+Author-email: Abishek S <your-email@example.com>
 License: MIT
 Keywords: CLI,shell,generator,automation
 Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
+Classifier: Environment :: Console
+Classifier: Topic :: Utilities
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 Requires-Dist: typer>=0.9.0
 Requires-Dist: rich>=13.0.0
 Requires-Dist: google-generativeai>=0.1.0
+Dynamic: author
 Dynamic: requires-python
 
 # Generative Shell-composer (Gensh)

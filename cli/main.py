@@ -42,6 +42,9 @@ def create_app():
         prompt: str = typer.Argument(..., help="Natural language instruction"),
         dry_run: bool = typer.Option(True, "--dry-run/--run", help="Preview or execute")
     ):
+        """
+        Generate and run a shell command from natural language input.
+        """
         config = load_config()
         result = generate_command(prompt, config)
         command = result["command"]
@@ -306,10 +309,11 @@ def create_app():
         print("[bold cyan]Explanation:[/bold cyan]")
         print(text) 
 
+    return app
 
 def main():
     app = create_app()
-    return app
+    app()
 
 if __name__ == "__main__":
     main()
