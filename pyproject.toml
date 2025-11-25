@@ -27,7 +27,8 @@ classifiers = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["cli", "core"]
+where = ["."]
+include = ["cli", "cli.*", "core", "core.*"]
 
 [project.scripts]
 gensh = "cli.main:main"
