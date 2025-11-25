@@ -6,7 +6,13 @@ from core.safety import analyze_risk
 from core.executor import execute_command
 from core.history import save_history
 from core.config_loader import load_config, update_config, DEFAULT_CONFIG
-from core.version import __version__
+
+try:
+    from importlib.metadata import version, PackageNotFoundError
+except ImportError:
+    # For Python < 3.8, you can use importlib_metadata package
+    from importlib_metadata import version, PackageNotFoundError
+
 
 import json
 import os
@@ -70,7 +76,14 @@ def create_app():
         """
         Show the current gensh version.
         """
-        print(f"[bold cyan]gensh version:[/bold cyan] {__version__}")   
+        try:
+            pkg_version = version("gensh-cli")  # Use your actual package name
+        except PackageNotFoundError:
+            # fallback if running from local source
+            from core.version import __version__ as pkg_version
+    
+        print(f"[bold cyan]gensh version:[/bold cyan] {pkg_version}")
+
 
     # =====================================================================
     # config subgroup

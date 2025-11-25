@@ -1,2 +1,0 @@
-[console_scripts]
-gensh = cli.main:main
