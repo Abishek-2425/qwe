@@ -41,20 +41,21 @@ Rules:
 Instruction: "{instruction}"
 """
 
-
 def build_explain_prompt(command: str):
     """
     Prompt for concise reverse-explanation of a shell command.
     """
     return f"""
-Explain this shell command briefly and accurately.
+Explain the following shell command concisely in exactly 3 points.
 
-Rules:
-- Max 3 short sentences.
-- No step-by-step breakdown.
-- Mention risks only if critical.
-- No filler.
+Format your explanation like this:
+
+Purpose: <short explanation>
+Main Effect: <short explanation>
+Risk: <short explanation, or 'Minimal'>
 
 COMMAND:
 {command}
+
+Use 1-2 sentences per point. Avoid Markdown symbols (*), code blocks, or extra sections.
 """

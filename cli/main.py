@@ -73,6 +73,9 @@ def show_version():
 
 @config_app.command("show")
 def config_show():
+    """
+    Show all the available configuration keys and their values.
+    """
     config = load_config()
     print("[bold cyan]Current configuration:[/bold cyan]")
     for k, v in config.items():
@@ -81,6 +84,9 @@ def config_show():
 
 @config_app.command("get")
 def config_get(key: str):
+    """
+    Show the value of a specific configuration key.
+    """
     config = load_config()
     if key not in config:
         print(f"[red]Key '{key}' not found in config[/red]")
@@ -90,6 +96,9 @@ def config_get(key: str):
 
 @config_app.command("set")
 def config_set(key: str, value: str):
+    """
+    Set the value of a specific configuration key.
+    """
     allowed_os = ["windows", "linux", "mac"]
 
     if key.lower() == "os" and value.lower() not in allowed_os:
@@ -110,6 +119,9 @@ def config_set(key: str, value: str):
 
 @config_app.command("reset")
 def config_reset():
+    """
+    Reset the configuration to default values.
+    """
     from core.config_loader import CONFIG_PATH
 
     with open(CONFIG_PATH, "w") as f:
@@ -158,6 +170,9 @@ HISTORY_FILE = os.path.expanduser("~/.genshpilot_history.json")
 
 @history_app.command("show")
 def history_show():
+    """
+    Show the top 50 command history entries.
+    """
     if not os.path.exists(HISTORY_FILE):
         print("[yellow]No history found.[/yellow]")
         return
@@ -172,6 +187,9 @@ def history_show():
 
 @history_app.command("clear")
 def history_clear():
+    """
+    Clear the entire command history.
+    """
     if os.path.exists(HISTORY_FILE):
         os.remove(HISTORY_FILE)
         print("[bold green]History cleared.[/bold green]")
@@ -192,12 +210,11 @@ app.add_typer(tools_app, name="tools")
 @tools_app.command("diagnose")
 def tools_diagnose():
     """
-    Diagnose genshPilot configuration and API connectivity.
+    Diagnose gensh configuration and API connectivity.
     """
 
     config = load_config()
-    print("[bold cyan]genshPilot Diagnostics[/bold cyan]")
-
+    print("[bold cyan]gensh Diagnostics[/bold cyan]")
     # 1. Check config keys
     print("\n[green]✔ Loaded configuration[/green]")
     for k, v in config.items():
