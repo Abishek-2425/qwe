@@ -1,11 +1,3 @@
-Here you go — a rewritten **README.md** that cleanly matches your chosen expansion:
-
-**FLYN → Flexible Language Yielding Notables**
-
-It keeps the structure intact while making the identity cohesive and confident.
-
----
-
 # Flexible Language Yielding Notables (flyn)
 
 flyn is a natural-language to shell command generator and executor. Type what you want in plain English, and flyn converts it into an OS-specific shell command with safety checks, history, diagnostics, and configuration tools.
