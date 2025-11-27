@@ -3,8 +3,8 @@ requires = ["setuptools>=65.5.1", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "qwe"
-version = "0.1.1"
+name = "flyn"
+version = "0.1.2"
 description = "Natural-language to shell command converter Grok API"
 readme = { file = "README.md", content-type = "text/markdown" }
 authors = [{ name = "Abishek S", email = "abishek642005@gmail.com" }]
