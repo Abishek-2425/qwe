@@ -1,38 +1,62 @@
-#  flyn
+# **flyn — v2.0**
 
-flyn is a natural-language to shell command generator and executor. Type what you want in plain English, and flyn converts it into an OS-specific shell command with safety checks, history, diagnostics, and configuration tools.
+**flyn** is a next-generation natural-language → shell command engine.
+Describe what you want in plain English, and flyn produces a safe, validated, OS-aware shell command — with beautiful output, risk analysis, explanations, and optional execution.
 
----
-
-## Features
-
-* Convert natural-language instructions into shell commands
-* Multiple OS modes: Windows, Linux, macOS
-* Built-in risk analysis for dangerous commands
-* Persistent command history (last 50 commands)
-* Configurable API key, model, OS, and temperature
-* Diagnostic tools to validate API and model connectivity
-* Explain shell commands with contextual breakdowns
-* Version command to check currently installed flyn version
+v2.0 introduces a completely redesigned architecture that is modular, safer, cleaner, and extensible.
+Everything from the CLI to the core engine has been rebuilt.
 
 ---
 
-## Installation
+## **✨ What’s New in v2.0**
 
-1. Clone the repository:
+### **New Commands**
+
+* `flyn show "<instruction>"` — generate a command (no execution)
+* `flyn run "<instruction>"` — generate + safely execute
+* `flyn exp "<command>"` — explain any shell command
+* `flyn config` — full configuration system
+
+### **New Architecture**
+
+* Dedicated **engine pipeline**: generate → parse → validate → execute
+* Modular **generation backends** (Google GenAI, mock, extensible for future)
+* Structured **executors** for bash, zsh, PowerShell, CMD
+* Dedicated **render layer** for spacing, blocks, and colors
+* Centralized **safety system** with severity levels
+* Clean **config system** using TOML defaults + loader
+
+### **Improved Safety**
+
+* Multi-stage risk analysis
+* Detection of destructive patterns
+* Execution blocking for dangerous commands
+* Caution prompts for moderate-risk commands
+* Dry-run display of the final shell command
+
+### **Beautiful Output**
+
+* Colorized sections
+* Clean spacing + layout blocks
+* Separate stdout/stderr
+* Icons and human-friendly formatting
+
+---
+
+# **Installation**
+
+Clone the repository:
 
 ```bash
 git clone <repo-url>
 cd flyn
 ```
 
-2. Create a virtual environment:
+Create and activate a virtual environment:
 
 ```bash
 python -m venv venv
 ```
-
-3. Activate the environment:
 
 **Windows:**
 
@@ -46,178 +70,203 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-4. Install dependencies:
+Install in editable mode:
 
 ```bash
 pip install -e .
 ```
 
-This installs `typer`, `rich`, `google-generativeai`, and other required runtime packages.
-
 ---
 
-## Usage
+# **Usage (v2.0 CLI)**
 
-All commands use the `flyn` CLI.
-
-### Run Commands
-
-Generate shell commands from natural language:
+## **🔹 Generate a command**
 
 ```bash
-flyn run "<instruction>" [--dry-run/--run]
+flyn show "<instruction>"
 ```
 
-* `--dry-run` (default) shows the command without executing it
-* `--run` executes the generated command
-
-**Example:**
+Example:
 
 ```bash
-flyn run "count the number of files in this folder"
+flyn show "list all files sorted by size"
 ```
 
 Output:
 
 ```
-Generated command: (Get-ChildItem -File | Measure-Object).Count
-Explanation: Counts the number of files in the current directory.
-Risk level: LOW
-Dry run: Command not executed.
+Generated Command:
+  ls -lS
+
+Risk Level: Safe
+Notes:
+  • Simple read-only listing command
 ```
 
 ---
 
-### Configuration
+## **🔹 Generate AND execute**
+
+```bash
+flyn run "<instruction>"
+```
+
+Example:
+
+```bash
+flyn run "create a folder called temp_data"
+```
+
+If safe:
+
+* command runs immediately
+  If caution/danger:
+* you receive a confirmation prompt
+
+---
+
+## **🔹 Explain a shell command**
+
+```bash
+flyn exp "<command>"
+```
+
+Example:
+
+```bash
+flyn exp "rm -rf /var/www/html"
+```
+
+Output includes:
+
+* Purpose
+* Main effect
+* Risk assessment
+* Dangerous flags
+* Safer alternatives (if possible)
+
+---
+
+## **🔹 Configuration**
 
 Manage flyn settings:
 
 ```bash
-flyn config show
+flyn config
 flyn config get <key>
 flyn config set <key> <value>
 flyn config reset
 ```
 
-Default OS: **Windows**
+Configurable keys include:
 
-Config keys include:
+* `backend` — which LLM backend to use
+* `shell` — preferred local shell
+* `confirm_risky` — ask before running dangerous commands
+* `log_level` — info/debug
+* `api_key` — for backends requiring it
 
-* `api_key`
-* `model`
-* `os`
-* `temperature` (0.0–1.0 randomness)
+Defaults are stored in:
 
-Example:
-
-```bash
-flyn config set os linux
-flyn config set temperature 0.3
+```
+~/.config/flyn/defaults.toml
 ```
 
 ---
 
-### OS Quick Commands
+# **How It Works (v2.0 Engine)**
 
-Switch OS mode instantly:
+Every command flows through the redesigned v2.0 pipeline:
 
-```bash
-flyn os windows
-flyn os linux
-flyn os mac
+1. **Generate** — Natural language → Raw command suggestion
+2. **Parse** — Clean + normalize the command
+3. **Validate** — Check safety, structure, destructive patterns
+4. **Render** — Display beautifully formatted output
+5. **Execute** (only in `run`) — OS-aware execution with error capture
+
+This architecture isolates responsibilities and makes the system predictable, testable, and easy to extend.
+
+---
+
+# **Supported Backends**
+
+flyn v2.0 supports modular LLM backends.
+
+Included:
+
+* Google Generative AI backend
+* Mock backend for testing and offline usage
+
+Pluggable:
+
+* OpenAI
+* Local LLaMA models
+* Custom enterprise backends
+
+---
+
+# **Supported Shells**
+
+flyn automatically detects your environment:
+
+* PowerShell (Windows)
+* CMD (Windows fallback)
+* Bash / Zsh (Linux/macOS)
+
+You can override it in config.
+
+---
+
+# **Safety Model**
+
+Risk levels:
+
+* **Safe** — No destructive action
+* **Caution** — Potentially irreversible or sensitive
+* **Danger** — Highly destructive (blocked unless forced)
+
+Patterns detected:
+
+* Recursive deletion
+* Disk formatting commands
+* Privileged operations
+* Wildcard-based destructive operations
+* Pipe chains with destructive consequences
+
+---
+
+# **Development Notes**
+
+Source layout:
+
+```
+flyn/
+  cli/              # CLI entry & commands
+  cli/render/       # visual formatting and UI blocks
+  core/engine/      # parse/validate/run pipeline
+  core/generation_backends/ # LLM adapters
+  config/           # config loader + defaults
 ```
 
-Or use explicit:
+Run tests:
 
 ```bash
-flyn os set <os>
+pytest
 ```
 
 ---
 
-### History
+# **Why flyn exists**
 
-```bash
-flyn history show   # Show last 50 commands
-flyn history clear  # Clear history
-```
+Every OS has its own shell, syntax, and quirks.
+Humans think in **intent**, not **syntax**.
 
----
+flyn bridges the gap:
 
-### Tools
-
-Diagnostic and reverse-analysis utilities:
-
-```bash
-flyn tools diagnose            # Check API key, model, config
-flyn tools models              # List Gemini models
-flyn tools explain "<command>" # Explain a shell command
-```
+> You think → flyn writes → shell executes safely.
 
 ---
 
-### Version
+# **License**
 
-```bash
-flyn version
-```
-
----
-
-## Command Reference
-
-| Command                          | Description                   |
-| -------------------------------- | ----------------------------- |
-| `flyn run "<instruction>"`       | Generate shell commands       |
-| `flyn version`                   | Show flyn version             |
-| `flyn config show`               | Show all configuration values |
-| `flyn config get <key>`          | Get specific config value     |
-| `flyn config set <key> <value>`  | Update config value           |
-| `flyn config reset`              | Reset config to defaults      |
-| `flyn os set <os>`               | Explicit OS mode              |
-| `flyn os windows/linux/mac`      | Quick OS switch               |
-| `flyn history show`              | Display history               |
-| `flyn history clear`             | Clear history                 |
-| `flyn tools diagnose`            | Validate config and API       |
-| `flyn tools models`              | List Gemini models            |
-| `flyn tools explain "<command>"` | Analyze a shell command       |
-
----
-
-## Supported OS
-
-* Windows (PowerShell)
-* Linux (bash/sh)
-* macOS (zsh/bash)
-
-Commands are adapted to the selected OS automatically.
-
----
-
-## Safety
-
-* Every generated command undergoes analysis
-* Risk levels: `LOW`, `MEDIUM`, `HIGH`
-* Dangerous patterns (e.g., destructive deletion) are flagged
-
----
-
-## Requirements
-
-* Python ≥ 3.10
-* Gemini API key
-* Internet connection
-
----
-
-## Development
-
-* Source code: `flyn/cli` + `flyn/core`
-* Config file: `flyn/config/settings.json`
-* Use a virtual environment for development
-
----
-
-Happy scripting with **flyn** — crafted to turn your thoughts into precise shell actions.
-
-Powered by Python, guided by late-night-curiosity, fuelled by caffeine. 🚀
+MIT
