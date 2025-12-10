@@ -6,8 +6,8 @@ High-level pipeline: select backend -> generate -> parse -> validate -> return s
 from __future__ import annotations
 from typing import Dict, Any, Optional
 from flyn.config.loader import get_config
-from flyn.core.parser import parse_command_from_model, extract_json_like
-from flyn.core.validator import validate_generated
+from flyn.core.engine.parser import parse_command_from_model, extract_json_like
+from flyn.core.engine.validator import validate_generated
 from flyn.core.generation_backends.google_genai import GoogleGenAIBackend
 from flyn.core.generation_backends.base import GenerationBackend
 

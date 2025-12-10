@@ -24,7 +24,8 @@ class GoogleGenAIBackend(GenerationBackend):
         # Minimal deterministic output mimicking structured response
         # In practice, call the model and return model.text or similar.
         # Keep the output simple: a short explanation + the command
-        cmd = f"echo \"Simulated command for: {instruction}\""
+        safe_instruction = instruction.replace('"', '\\"')
+        cmd = f"echo \"Simulated command for: {safe_instruction}\""
         explanation = f"Simulated: run echo for instruction"
         simulated = f'{{"command": "{cmd}", "explanation": "{explanation}", "confidence": 0.9, "risk_tags": []}}'
         return simulated

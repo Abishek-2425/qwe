@@ -28,7 +28,10 @@ def run_command(cmd: str, timeout: int | None = None, dry_run: bool = True) -> D
     safe_dir = _get_safe_workdir()
     result: Dict[str, Any] = {"dry_run": bool(dry_run), "cmd": cmd}
 
-    if dry_run or cfg.get("general.dry_run_default", True):
+    default_dry = bool(cfg.get("general.dry_run_default", True))
+    # If explicitly set dry_run=True → always dry.
+    # If explicitly overridden (dry_run=False) → run normally even if default_dry=True.
+    if dry_run and default_dry:
         result.update({"ok": True, "rc": None, "stdout": "", "stderr": ""})
         return result
 

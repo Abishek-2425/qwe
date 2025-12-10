@@ -6,7 +6,7 @@ Validate parsed command and combine model-provided risk/confidence with internal
 from __future__ import annotations
 from typing import Dict, Any
 from pydantic import BaseModel, Field, confloat
-from flyn.core import safety
+from flyn.core.engine import safety
 from flyn.config.loader import get_config
 
 class GenOutput(BaseModel):

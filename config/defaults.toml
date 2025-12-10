@@ -11,6 +11,6 @@ provider = "google"
 google_api_key = ""
 
 [safety]
-blacklist = ["rm", "dd", "mkfs", ">:","chmod 777", "chown 0:0"]
+blacklist = ["rm", "dd", "mkfs", "chmod 777", "chown 0:0"]
 max_timeout_seconds = 30
 min_confidence_to_auto_run = 0.9

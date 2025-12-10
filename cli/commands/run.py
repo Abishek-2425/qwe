@@ -4,15 +4,16 @@ run.py - generate, validate and (optionally) execute the command
 
 from __future__ import annotations
 import typer
-from flyn.core import generator, executor
+from flyn.core.engine import generator 
+from flyn.core.engine import executor
 from flyn.cli.render.blocks import command_block, risk_block, output_block, notes_block
-from flyn.core import safety
+from flyn.core.engine import safety
 from flyn.config.loader import get_config
-from flyn.core.history import append_entry
+from flyn.core.engine.history import append_entry
 
 app = typer.Typer()
 
-@app.command("run")
+@app.command()
 def run(instruction: str, confirm: bool = typer.Option(False, "--confirm", "-y"), no_dry: bool = typer.Option(False, "--no-dry", "--execute")):
     """
     Generate a command and execute it (subject to safety rules).
