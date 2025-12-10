@@ -4,7 +4,7 @@ show.py - generate and display the proposed command, risk, and explanation
 
 from __future__ import annotations
 import typer
-from flyn.core.engine import generator
+from flyn.core import generator
 from flyn.cli.render.blocks import command_block, risk_block, notes_block
 
 app = typer.Typer()

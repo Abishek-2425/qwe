@@ -4,8 +4,8 @@ exp.py - explain a raw command using parser + safety (lightweight)
 
 from __future__ import annotations
 import typer
-from flyn.core.engine.parser import parse_command_from_model
-from flyn.core.engine import safety
+from flyn.core.parser import parse_command_from_model
+from flyn.core import safety
 from flyn.cli.render.blocks import command_block, risk_block, notes_block
 
 app = typer.Typer()
